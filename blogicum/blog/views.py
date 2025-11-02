@@ -1,6 +1,9 @@
 from django.utils import timezone
-
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import CreateView
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+
 from .models import Post, Category
 
 
@@ -52,3 +55,9 @@ def category_posts(request, category_slug):
             'post_list': posts
         }
     )
+
+
+class RegistrationView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'registration/registration_form.html'
+    success_url = reverse_lazy('blog:index')

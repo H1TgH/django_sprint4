@@ -1,10 +1,16 @@
-from django.urls import path
-from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path, include
+
+from .views import RegistrationView
 
 
 app_name = 'blog'
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('<int:id>/', views.post_detail, name='post_detail'),
-    path('<slug:category_slug>/', views.category_posts, name='category_posts'),
+    path('admin/', admin.site.urls),
+    path('', include('blog.urls')),
+    path('pages/', include('pages.urls')),
+    path('auth/', include('django.contrib.auth.urls')),
+    path('auth/registration/', RegistrationView.as_view(), name='registration'),
 ]
